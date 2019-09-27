@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import F, Sum
+from django.db.models import F, Sum, FloatField
 
 from decimal import Decimal
 from django.conf import settings
@@ -90,4 +90,22 @@ class Cart(models.Model):
 
     def __str__(self) -> str:
         return f"Cart No. {self.id}"  
-    
+
+    @property
+    def subtotal_price(self):
+        return self.items.aggregate(
+                    total_price=Sum(F('quantity') * F('item__price'), output_field=FloatField())
+                )['total_price'] or Decimal('0') 
+    @property
+    def tax_amt(self):
+        tax = 0.07
+        return self.items.aggregate(
+                    total_price=Sum(F('quantity') * F('item__price') * tax, output_field=FloatField())
+                )['total_price'] or Decimal('0')  
+
+    @property
+    def total_price(self):
+        tax = 1.07
+        return self.items.aggregate(
+                    total_price=Sum(F('quantity') * F('item__price') * tax, output_field=FloatField())
+                )['total_price'] or Decimal('0')                 

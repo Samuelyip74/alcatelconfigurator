@@ -50,12 +50,17 @@
     <tr>
       <td colspan="4"></td>
       <td align="right"><b>Subtotal</b></td>
-      <td align="center" colspan="1">$<span class='cart-subtotal'>{{ cart.get_total }}</span></td>
+      <td align="center" colspan="1">$<span class='cart-subtotal'>{{ cart.subtotal_price }}</span></td>
     </tr>
     <tr>
       <td colspan="4"></td>
+      <td align="right"><b>GST (7%)</b></td>
+      <td align="center" colspan="1">$<span class='cart-total'>{{ cart.tax_amt|floatformat:"2" }}</span></td>
+    </tr>    
+    <tr>
+      <td colspan="4"></td>
       <td align="right"><b>Total</b></td>
-      <td align="center" colspan="1">$<span class='cart-total'>{{ cart.get_total }}</span></td>
+      <td align="center" colspan="1">$<span class='cart-total'>{{ cart.total_price|floatformat:"2" }}</span></td>
     </tr>
     <tr>
       <td colspan="5"></td>
