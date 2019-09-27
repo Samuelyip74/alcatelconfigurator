@@ -1,0 +1,135 @@
+.product-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    background-color: white;
+
+    a:link {
+        text-decoration: none;
+      }
+      
+      a:visited {
+        text-decoration: none;
+      }
+      
+      a:hover {
+        text-decoration: none;
+      }
+      
+      a:active {
+        text-decoration: none;
+      }
+  }
+
+  .product-card img {
+      width:100%;
+      height:200px;
+      object-fit: contain;
+
+  }
+
+  .product-card-description {
+      max-height: 2rem;
+      min-height: 2rem;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .product-card .card-button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #6184D8;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .product-card .card-button:hover {
+    opacity: 0.7;
+    text-decoration: none;
+  }
+
+  .product-card-body {
+      margin: 0.25rem 0 0 0;
+      width:100%;
+  }
+
+
+
+
+
+  /** home secial color themes **/
+/** new PC mall UI guideline **/
+/** BACC **/
+/** home secial color themes **/
+/** new PC mall UI guideline **/
+/** BACC **/
+/** typography related **/
+/** z-index related **/
+/** button related **/
+/** input related **/
+/** badge related **/
+/** dropdown related **/
+/** accordion related **/
+/** checkbox related **/
+/** radio button related **/
+/** motion curve */
+/** box shadow related **/
+/** display card related **/
+/** section header **/
+/** new PC mall guideline **/
+/** path **/
+/** container related **/
+.shopee-filter-group {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .09); }
+    .shopee-filter-group .shopee-filter {
+      -webkit-box-align: start;
+      -webkit-align-items: flex-start;
+         -moz-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start;
+      padding: 0.5rem 0; }
+    .shopee-filter-group__header {
+      text-transform: capitalize;
+      margin-bottom: 0.625rem;
+      font-weight: 500; }
+    .shopee-filter-group__item-hint {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #929292;
+      margin-top: 0.5rem;
+      -webkit-flex-basis: 100%;
+          -ms-flex-preferred-size: 100%;
+              flex-basis: 100%; }
+    .shopee-filter-group__toggle-btn {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      padding: 0.5rem 0.625rem 0.5rem 1.25rem;
+      font-weight: 500;
+      cursor: pointer; }
+      .shopee-filter-group__toggle-btn svg {
+        font-size: 0.4375rem;
+        margin-left: 0.625rem; }
+
+.shopee-checkbox__control{
+    display: flex;
+}
+  

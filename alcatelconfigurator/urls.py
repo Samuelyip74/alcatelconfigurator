@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', home, name='homepage'),
     url(r'^product/',include('product.urls')),
+    url(r'^cart/',include('cart.urls')),
 ]
 
 if settings.DEBUG:

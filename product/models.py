@@ -4,6 +4,8 @@ import os
 import math
 
 from django.conf import settings
+from django.urls import reverse
+
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.db import models

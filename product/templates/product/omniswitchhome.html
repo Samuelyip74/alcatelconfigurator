@@ -129,7 +129,7 @@
                                 <h5 class="card-title">{{ obj.sku }}</h5>
                                 <p class="card-price">${{ obj.price }}</p>
                                 <p class="product-card-description">{{ obj.description|truncatechars:50 }}</p>
-                                <a href="{{ obj.product_family.slug }}"><p class="card-button">Add to cart</p></a>
+                                <a href="{% url 'cart:add2cart' %}?product_id={{ obj.id  }}"><p class="card-button">Add to cart</p></a>
                             </div>
                     </div>
                 </div>

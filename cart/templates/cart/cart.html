@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'header.html' %}
+
+
+<DIV class=container style='padding-top: 150px; padding-bottom: 100px'>
+<h1>My Cart</h1><br>
+{% if cartid %} 
+<table class="table cart-table">
+  <thead>
+    <tr>
+      <th width="50px">Item</th>
+      <th width="150px">Product Name</th>
+      <th width="500px">Description</th>
+      <th width="100px">Price</th>
+      <th width="100px">Quantity</th>
+      <th style="text-align:center;" width="100px">Total</th>
+      <th width="50px">Delete</th>
+    </tr>
+  </thead>
+  <tbody class='cart-body'>
+    {% for order_item in cart.items.all %}
+    <th scope="row">{{ forloop.counter }}</th>
+    <td><a href='{{ order_item.item.get_absolute_url }}'>{{ order_item.item.sku }}</a> </td>
+    <td>{{ order_item.item.description|truncatewords:20 }}</td>
+    <td>${{ order_item.item.price }}</td>
+    <td align="center">
+        <form id='myform' method='POST' action='#' class="numbo">
+            <div class="form-row">
+              <div class="form-row__content">
+                <a style="padding:0;width:30%;" href="{% url 'cart:remove-item-from-cart' %}?product_id={{order_item.item.id}}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">-</a>
+                <input style="text-align:center;width:30%;" class="form-input qty" type="text" name="quantity-test" value="{{ order_item.quantity }}" />
+                <a style="padding:0;width:30%;" href="{% url 'cart:add2cart' %}?product_id={{order_item.item.id}}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">+</a>
+              </div>
+            </div>
+          </form>
+          
+          <!--
+                <input type='button' value='-' class='qtyminus' field='quantity' style="font-weight: bold;" />
+                <input type="text" name="quantity" value="1" class="qty" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                <input type='button' value='+' class='qtyplus' field='quantity' style="font-weight: bold;" />
+          -->
+              
+    </td>
+    <!-- <td align="center"><span>-</span>{{ order_item.quantity }}<span><i class="fas fa-plus"></i></span></td> -->
+    <td align="center">${{ order_item.item_total_price }}</td>
+      <td align="center"><a href="{% url 'cart:remove-from-cart' product_id=order_item.item.id %}"><i class="fas fa-trash"></i></a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="4"></td>
+      <td align="right"><b>Subtotal</b></td>
+      <td align="center" colspan="1">$<span class='cart-subtotal'>{{ cart.get_total }}</span></td>
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+      <td align="right"><b>Total</b></td>
+      <td align="center" colspan="1">$<span class='cart-total'>{{ cart.get_total }}</span></td>
+    </tr>
+    <tr>
+      <td colspan="5"></td>
+      <td colspan="5"><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Checkout</a></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div class='cart-item-remove-form' style='display:none'>
+  </div>
+
+{% else %}
+  Your cart is empty
+{% endif %}
+</DIV>
+{% endblock %}

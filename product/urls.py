@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^omniswitch', omniswitchhome, name='omniswitchhome'),
     url(r'^stellar', stellarhome, name='stellarhome'),
     url(r'^lbs', lbshome, name='lbshome'),
+    url(r'^(?P<slug>[\w-]+)/$', omniswitchhome, name='detail'),
 ]
