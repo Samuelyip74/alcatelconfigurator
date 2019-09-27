@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'header.html' %}
+
+<DIV class="container-fluid" style='display:flex;padding-top: 20px; padding-bottom: 100px'>
+    <!-- Search Panel Container -->
+    <div class="container" style="flex:1;">
+        <div>Search Filter</div>
+        <div>
+            <div><h5>Modular or Fixed</h5></div>
+            <!--control check box-->
+            <div>
+                <label class="shopee-checkbox__control">
+                    <input type="checkbox" name="" value="-1">
+                    <div class="shopee-checkbox__box"><i>&ensp;</i>
+                    </div><span class="shopee-checkbox__label">Modular</span>
+                </label>
+            </div>
+            <div>
+                <label class="shopee-checkbox__control">
+                    <input type="checkbox" name="" value="-1">
+                    <div class="shopee-checkbox__box"><i>&ensp;</i>
+                    </div><span class="shopee-checkbox__label">Fixed</span>
+                </label>
+            </div>
+        </div>
+        <div>
+                <div><h5>Hardware options</h5></div>
+                <!--control check box-->
+                <div>
+                        <label class="shopee-checkbox__control">
+                            <input type="checkbox" name="" value="-1">
+                            <div class="shopee-checkbox__box"><i>&ensp;</i>
+                            </div><span class="shopee-checkbox__label">AC</span>
+                        </label>
+                    </div>
+                <div>
+                        <label class="shopee-checkbox__control">
+                            <input type="checkbox" name="" value="-1">
+                            <div class="shopee-checkbox__box"><i>&ensp;</i>
+                            </div><span class="shopee-checkbox__label">DC</span>
+                        </label>
+                    </div>
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">PoE</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">HPoE</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">24 Ports</span>
+                    </label>
+                </div>   
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">48 Ports</span>
+                    </label>
+                </div>    
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">10G Uplink</span>
+                    </label>
+                </div>   
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">25G Uplink</span>
+                    </label>
+                </div>     
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">40G Uplink</span>
+                    </label>
+                </div> 
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">100G Uplink</span>
+                    </label>
+                </div>                        
+                <div>
+                    <label class="shopee-checkbox__control">
+                        <input type="checkbox" name="" value="-1">
+                        <div class="shopee-checkbox__box"><i>&ensp;</i>
+                        </div><span class="shopee-checkbox__label">Ruggedized</span>
+                    </label>
+                </div>                                                                           
+        </div>
+
+    </div>
+
+    <!-- Product Listing Container -->
+    <div class="container" style="flex:5;">
+        <div class="row" style="display: flex;flex-direction:row; flex-wrap: wrap">
+            {% for obj in p_object %}
+            <div class="col-xs-2-4" style="
+                flex-basis: 20%;
+                max-width: 20%;
+                margin: .5rem 0 0;
+            ">
+                <div>
+                    <div class="product-card">
+                            <div style="max-height:300px;">
+                                <a href="{{ obj.product_family.slug }}">
+                                    <img src="{{ obj.product_images.image.url }}" alt="Card image cap">
+                                </a>
+                            </div>
+                            <div class="product-card-body">
+                                <small>{{ obj.product_family.pname }}</small>
+                                <h5 class="card-title">{{ obj.sku }}</h5>
+                                <p class="card-price">${{ obj.price }}</p>
+                                <p class="product-card-description">{{ obj.description|truncatechars:50 }}</p>
+                                <a href="{{ obj.product_family.slug }}"><p class="card-button">Add to cart</p></a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</DIV> 
+
+
+{% endblock %}
