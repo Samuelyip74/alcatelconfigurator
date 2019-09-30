@@ -1,20 +1,24 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.http import HttpResponseRedirect,JsonResponse
+from django.urls import reverse
+
 from product.models import ProductVariant
 from cart.models import Cart,CartItem
 
 
 def add_item_cart(request):
+
     # Get Product ID from HTTP Request.  
     if request.POST.get('product_id') is not None:
         product_id = request.POST.get('product_id')
     elif request.GET.get('product_id') is not None:
-        product_id = request.GET.get('product_id')
+        product_id = request.GET.get('product_id')  
 
     if product_id is not None:
         try:
             # Check if Product is still available in Database.  
             product_obj = ProductVariant.objects.get(id=product_id)
-        except Product.DoesNotExist:
+        except ProductVariant.DoesNotExist:
             print("Show message to user, product is gone?")
             return redirect("cart:home")
 
@@ -49,8 +53,7 @@ def add_item_cart(request):
             # cart_obj.total = cart_obj.get_total()
             cart_obj.save()
         
-        # Calculate total
-        
+        # Calculate total    
 
         # return redirect(product_obj.get_absolute_url())
         if request.is_ajax(): # Asynchronous JavaScript And XML / JSON
@@ -62,10 +65,11 @@ def add_item_cart(request):
             }
             return JsonResponse(json_data, status=200) # HttpResponse
             # return JsonResponse({"message": "Error 400"}, status=400) # Django Rest Framework 
+    
 
     return redirect("cart:home")
 
-def remove_from_cart(request,product_id):
+def remove_from_cart(request,product_id):   
     cart_id = request.session.get("cart_id", None)                          # Get Cart_id from request
     order_qs = Cart.objects.filter(                                         # Get Cart_object
         id=cart_id,
@@ -118,8 +122,12 @@ def remove_single_item_from_cart(request):
     else:
         return redirect("cart:home")        
 
+
+
+
 # Create your views here.
 def cart_home(request):
+
     cart_id = request.session.get("cart_id", None) 
     if cart_id is not None:
         cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -131,3 +139,4 @@ def cart_home(request):
     }
     # return render(request, "cart/cart.html", {"cart": cart_obj})
     return render(request, "cart/cart.html", context)
+
