@@ -6,18 +6,12 @@ from product.models import ProductVariant
 from cart.models import Cart,CartItem
 
 
-def add_item_cart(request):
+def add_item_cart(request, productid):
 
-    # Get Product ID from HTTP Request.  
-    if request.POST.get('product_id') is not None:
-        product_id = request.POST.get('product_id')
-    elif request.GET.get('product_id') is not None:
-        product_id = request.GET.get('product_id')  
-
-    if product_id is not None:
+    if productid is not None:
         try:
             # Check if Product is still available in Database.  
-            product_obj = ProductVariant.objects.get(id=product_id)
+            product_obj = ProductVariant.objects.get(id=productid)
         except ProductVariant.DoesNotExist:
             print("Show message to user, product is gone?")
             return redirect("cart:home")
@@ -92,15 +86,10 @@ def remove_from_cart(request,product_id):
     else:
         return redirect("cart:home")    
 
-def remove_single_item_from_cart(request):
-    # Get Product ID from HTTP Request.  
-    if request.POST.get('product_id') is not None:
-        product_id = request.POST.get('product_id')
-    elif request.GET.get('product_id') is not None:
-        product_id = request.GET.get('product_id')
+def remove_single_item_from_cart(request, productid):
         
     cart_id = request.session.get("cart_id", None)                      # Get Cart_id from request
-    item = get_object_or_404(CartItem, item=product_id, cartid=cart_id) # Get item from CartItem  
+    item = get_object_or_404(CartItem, item=productid, cartid=cart_id) # Get item from CartItem  
     order_qs = Cart.objects.filter(                                     # Get Cart_object
         id=cart_id,
     )
@@ -112,7 +101,7 @@ def remove_single_item_from_cart(request):
             if item.quantity == 0:
                 order.items.remove(item)                                    # Remote item from Cart     
                 request.session['cart_items'] -= 1                          # Update 'cart_items' attribute
-                CartItem.objects.filter(item=product_id,cartid=cart_id).delete()  # Delete item from CartItem
+                CartItem.objects.filter(item=productid,cartid=cart_id).delete()  # Delete item from CartItem
                 return redirect("cart:home")
             item.save()
             request.session['cart_items'] -= 1                          # Update 'cart_items' attribute
@@ -123,9 +112,6 @@ def remove_single_item_from_cart(request):
         return redirect("cart:home")        
 
 
-
-
-# Create your views here.
 def cart_home(request):
 
     cart_id = request.session.get("cart_id", None) 
@@ -137,6 +123,5 @@ def cart_home(request):
         'cartid' : cart_id,
         'cart'   : cart_obj,
     }
-    # return render(request, "cart/cart.html", {"cart": cart_obj})
     return render(request, "cart/cart.html", context)
 

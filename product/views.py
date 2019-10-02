@@ -2,8 +2,8 @@ from django.shortcuts import render
 from .models import ProductVariant
 
 # Create your views here.
-def omniswitchhome(request):
-    product_obj = ProductVariant.objects.filter(product_family__pname__icontains='OmniSwitch')
+def productcategory(request,category):
+    product_obj = ProductVariant.objects.filter(product_family__pname__icontains=category)
     context = {
         'p_object' : product_obj,
     }

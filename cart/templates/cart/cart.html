@@ -28,9 +28,9 @@
         <form id='myform' method='POST' action='#' class="numbo">
             <div class="form-row">
               <div class="form-row__content">
-                <a style="padding:0;width:30%;" href="{% url 'cart:remove-item-from-cart' %}?product_id={{order_item.item.id}}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">-</a>
+                <a style="padding:0;width:30%;" href="{% url 'cart:remove-item-from-cart' order_item.item.id %}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">-</a>
                 <input style="text-align:center;width:30%;" class="form-input qty" type="text" name="quantity-test" value="{{ order_item.quantity }}" />
-                <a style="padding:0;width:30%;" href="{% url 'cart:add2cart' %}?product_id={{order_item.item.id}}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">+</a>
+                <a style="padding:0;width:30%;" href="{% url 'cart:add2cart' order_item.item.id %}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">+</a>
               </div>
             </div>
           </form>
