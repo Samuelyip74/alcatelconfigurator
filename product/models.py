@@ -107,6 +107,7 @@ class ProductVariant(models.Model):
     options = models.ManyToManyField(ProductOption)
     price = models.FloatField('Price',default=0.00)
     product_images = models.ForeignKey(Image, on_delete=models.CASCADE,null=True,blank=True,related_name='productimages')
+    is_active = models.BooleanField(default=True,blank=True)
 
     def __str__(self):
         return self.sku

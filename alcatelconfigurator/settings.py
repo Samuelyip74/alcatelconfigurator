@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'product',
     'cart',
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,12 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+
+# Static Meta data
+SITE_NAME = 'Alcatel eBuy'
+META_KEYWORDS = 'Switch, Wireless, LBS'
+META_DESCRIPTION = 'eCommerce platform based on Django'
+
 
 
 MEDIA_URL = '/media/'
