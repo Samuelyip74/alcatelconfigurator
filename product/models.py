@@ -57,6 +57,12 @@ class ProductOption(models.Model):
     def __str__(self):
         return self.op_name
 
+class Category(models.Model):
+    name = models.CharField(max_length=200)    
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     pname = models.CharField('Product Family',max_length=200)
     description = models.CharField('Description',max_length=200)
@@ -95,6 +101,7 @@ class Image(models.Model):
 class ProductVariant(models.Model):
     sku = models.CharField('SKU',max_length=200)
     product_family = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
+    product_category = models.ManyToManyField(Category)
     description = models.CharField('Detail Description',max_length=200,blank=True)
     created_date = models.DateTimeField('Date created',auto_now_add=True, blank=True)
     options = models.ManyToManyField(ProductOption)
@@ -103,6 +110,7 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return self.sku
+    
 
   
  
