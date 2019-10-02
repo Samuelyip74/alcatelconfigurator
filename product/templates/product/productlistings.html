@@ -7,6 +7,12 @@
     <div class="container" style="flex:1;">
         <div>Search Filter</div>
         <div>
+            <h3>Categories</h3>
+            {% for c in c_object %}
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a><br />
+            {% endfor %}
+        </div>
+        <div>
             <div><h5>Modular or Fixed</h5></div>
             <!--control check box-->
             <div>

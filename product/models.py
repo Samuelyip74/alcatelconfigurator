@@ -63,6 +63,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        #return "/products/{slug}/".format(slug=self.slug)
+        return reverse("product:detail", kwargs={"slug": self.name})
+
 class Product(models.Model):
     pname = models.CharField('Product Family',max_length=200)
     description = models.CharField('Description',max_length=200)
