@@ -110,4 +110,6 @@ class Cart(models.Model):
         tax = 1.07
         return self.items.aggregate(
                     total_price=Sum(F('quantity') * F('item__price') * tax, output_field=FloatField())
-                )['total_price'] or Decimal('0')                 
+                )['total_price'] or Decimal('0') 
+                
+                                
