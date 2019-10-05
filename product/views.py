@@ -12,3 +12,13 @@ def productlisting(request,category):
         'p_object' : product_obj,
     }
     return render(request, "product/productlistings.html",context)
+
+
+# Create your views here.
+def productdetail(request,slug):
+    product_obj = ProductVariant.objects.get(sku=slug)
+    print(product_obj)
+    context = {
+        'p_object' : product_obj,
+    }
+    return render(request, "product/productdetail.html", context)

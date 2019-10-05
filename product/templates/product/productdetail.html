@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'header.html' %}
+
+
+    <DIV class="container-fluid desktop-only" style="margin:auto;">
+        <DIV class="container desktop-only" style="display:flex;height:600px;">
+            <DIV class="image-container" style="flex:2;">
+                <ul class=thumb>
+                    {% for img in p_object.images.all %}
+                        <li><img src='{{ img.image.url }}'/></li>
+                    {% endfor %}
+                </ul>
+                <DIV class="picBox">
+                    <img style="height: 100%; width: 100%;" src='{{ p_object.images.all.0.image.url }}' />
+                </DIV>
+            </DIV>
+            <DIV class="description-container" style="flex:1;margin-left:20px;">
+                        <DIV class="row no-gutters" style="Margin-top: 20px;
+                        margin-bottom: 5px;
+                        font-weight: bold;
+                        font-family: Roboto;
+                        font-size: 1.8rem;">
+                        {{ p_object.sku }}</DIV>
+                        {% if p_object.description %}
+                        <DIV class="row no-gutters" style="Margin-top: 2px;
+                        margin-bottom: 2px;
+                        font-family: Roboto;
+                        font-size: 1rem;">{{ p_object.shortdesc }}</DIV>
+                        {% endif %}
+                        <DIV class="row no-gutters"><small>{{ p_object.viewed }} viewed</small></DIV>                    
+                        {% if p_object.discountedprice %}
+                        <DIV class="row no-gutters" style="Margin-top: 20px;
+                        margin-bottom: 2px;
+                        font-weight: bold;
+                        font-family: Roboto;
+                        font-size: 1.5rem;">${{ p_object.discountedprice }}</DIV>
+                        <DIV class="row no-gutters" style="Margin-top: 2px;
+                        margin-bottom: 20px;
+                        font-weight: bold;
+                        font-family: Roboto;
+                        font-size: 1.5rem;"><del>${{ p_object.price }}</del></DIV>
+                        {% else %}
+                        <DIV class="row no-gutters" style="Margin-top: 2px;
+                        margin-bottom: 20px;
+                        font-weight: bold;
+                        font-family: Roboto;
+                        font-size: 1.5rem;">${{ p_object.price }}</DIV>
+                        {% endif %}
+                        <DIV class="row no-gutters" style="width:100%;">
+                        <DIV class="container" style="display:flex;width:100%;margin:0;padding:0;">
+                            <DIV class="quantity-button">
+                                    <button type="button" class="btn plus-minus" disabled="disabled" data-type="minus" data-field="quant[1]" style="flex:1;">
+                                        <i class="fas fa-minus" style="color:lightgrey"></i>        
+                                    </button>
+                                    <input class="quantity-input input-number" type="text" name="quant[1]" value="1" min="1" max="100">
+                                    <button type="button" class="btn  plus-minus" data-type="plus" data-field="quant[1]" style="flex:1;">
+                                        <i class="fas fa-plus" style="color:lightgrey"></i>
+                                        </button>
+                            </DIV>
+                            <a href="" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">Add to cart</a>
+
+                        </DIV>
+                        <DIV class="row no-gutters" style="margin-top:20px;">
+                                <span style="font-size:14px;margin:auto 0;">Share with:</span>
+                                <a href="" style="margin-left:5px;font-size:12px;background-color: #3b5998;color:white; padding:5px 10px;border-radius: 12px;">Facebook</a>
+                                <a href="" style="margin-left:5px;font-size:12px;background-color: red;color:white; padding:5px 10px;border-radius: 12px;">Google+</a>                           
+                                <a href="" style="margin-left:5px;font-size:12px;background-color: #00acee;color:white; padding:5px 10px;border-radius: 12px;">Twitter</a>
+                                <a href="" style="margin-left:5px;font-size:12px;background-color: #3f729b;color:white; padding:5px 10px;border-radius: 12px;">Instagram</a>
+                            </DIV>
+            </DIV>
+        </DIV>
+        </DIV>
+
+        <DIV class="container desktop-only" style="background-color: white;">
+            <DIV class="container no-gutters">
+                <DIV style="Margin-top: 20px;
+                margin-bottom: 5px;
+                font-weight: bold;
+                font-family: Roboto;
+                font-size: 1.8rem;">Product Description</DIV>
+                <DIV style="Margin-top: 10px;
+                margin-bottom: 5px;
+                font-family: Roboto;
+                min-height: 200px;
+                font-size: 1.2rem;">{{ p_object.description }}</DIV>
+            </DIV>
+        </DIV>
+    </DIV>
+
+
+
+{% endblock %}

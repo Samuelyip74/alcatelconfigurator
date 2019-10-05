@@ -65,7 +65,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         #return "/products/{slug}/".format(slug=self.slug)
-        return reverse("product:detail", kwargs={"slug": self.name})
+        return reverse("product:product_listing", kwargs={"category": self.name})
 
 class Product(models.Model):
     pname = models.CharField('Product Family',max_length=200)
@@ -88,19 +88,11 @@ pre_save.connect(product_pre_save_receiver, sender=Product)
 
 
 class Image(models.Model):
-    product = models.ForeignKey(Product, default=None, on_delete='CASCADE')
     image   = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
 
     def __str__(self):
-        return f"Images of {self.product}"   
+        return f"Images of {self.id}"
 
-
-class Image(models.Model):
-    product = models.ForeignKey(Product, default=None, on_delete='CASCADE')
-    image   = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-
-    def __str__(self):
-        return f"Images of {self.product}" 
 
 class ProductVariant(models.Model):
     sku = models.CharField('SKU',max_length=200)
@@ -110,11 +102,15 @@ class ProductVariant(models.Model):
     created_date = models.DateTimeField('Date created',auto_now_add=True, blank=True)
     options = models.ManyToManyField(ProductOption)
     price = models.FloatField('Price',default=0.00)
-    product_images = models.ForeignKey(Image, on_delete=models.CASCADE,null=True,blank=True,related_name='productimages')
+    images = models.ManyToManyField(Image)
     is_active = models.BooleanField(default=True,blank=True)
 
     def __str__(self):
         return self.sku
+
+    def get_absolute_url(self):
+        #return "/products/{slug}/".format(slug=self.slug)
+        return reverse("product:detail", kwargs={"slug": self.sku})
     
 
   
