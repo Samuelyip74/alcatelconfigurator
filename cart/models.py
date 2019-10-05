@@ -62,7 +62,7 @@ class CartItemManager(models.Manager):
         return self.model.objects.create(cartid=cartid_obj)   
 
 class CartItem(models.Model):
-    item        = models.ForeignKey(ProductVariant,null=True, blank=True,on_delete='CASCADE')
+    item        = models.ForeignKey(ProductVariant,null=True, blank=True,on_delete='CASCADE',unique=False)
     quantity    = models.IntegerField(default=1,null=True, blank=True)
     cartid      = models.IntegerField(null=True, blank=True) 
 
@@ -75,8 +75,13 @@ class CartItem(models.Model):
     def item_total_price(self):
         return self.item.price * self.quantity
 
+    def augment_quantity(self, quantity):
+        self.quantity = self.quantity + int(quantity)
+        self.save()        
+
 class Cart(models.Model):
     user        = models.ForeignKey(User, null=True, blank=True, on_delete='CASCADE')
+    date_created = models.DateTimeField(auto_now_add=True)
     items       = models.ManyToManyField(CartItem,blank=True)
     subtotal    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     total       = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
@@ -85,11 +90,8 @@ class Cart(models.Model):
 
     objects = CartManager()
 
-    # def __str__(self):
-    #      return str(self.id)
-
     def __str__(self) -> str:
-        return f"Cart No. {self.id}"  
+        return f"Cart No. {self.id}"       
 
     @property
     def subtotal_price(self):

@@ -127,12 +127,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
-# Static Meta data
-SITE_NAME = 'Alcatel eBuy'
-META_KEYWORDS = 'Switch, Wireless, LBS'
-META_DESCRIPTION = 'eCommerce platform based on Django'
-
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")

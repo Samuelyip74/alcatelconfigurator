@@ -6,12 +6,15 @@ from product.models import ProductVariant
 from cart.models import Cart,CartItem
 
 
-def add_item_cart(request, productid):
+def add_item_cart(request):
+    postdata = request.POST.copy()
+    product_slug = postdata.get('product_slug','')
+    quantity = postdata.get('quantity',1)
 
-    if productid is not None:
+    if product_slug is not None:
         try:
             # Check if Product is still available in Database.  
-            product_obj = ProductVariant.objects.get(id=productid)
+            product_obj = ProductVariant.objects.get(sku=product_slug)
         except ProductVariant.DoesNotExist:
             print("Show message to user, product is gone?")
             return redirect("cart:home")
@@ -30,12 +33,11 @@ def add_item_cart(request, productid):
                 cartid=cart_obj.id,
         )
 
-        print(request.session['cart_items'])
-
         # If item already in cart, increment quantity
         if new_item is False:
-            itemInCart.quantity +=1
-            itemInCart.save()
+            # itemInCart.quantity +=1
+            # itemInCart.save()
+            itemInCart.augment_quantity(quantity)
             cart_obj.items.add(itemInCart)            
             request.session['cart_items'] += 1
             # cart_obj.total = cart_obj.get_total()

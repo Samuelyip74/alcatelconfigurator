@@ -49,16 +49,12 @@
                         {% endif %}
                         <DIV class="row no-gutters" style="width:100%;">
                         <DIV class="container" style="display:flex;width:100%;margin:0;padding:0;">
-                            <DIV class="quantity-button">
-                                    <button type="button" class="btn plus-minus" disabled="disabled" data-type="minus" data-field="quant[1]" style="flex:1;">
-                                        <i class="fas fa-minus" style="color:lightgrey"></i>        
-                                    </button>
-                                    <input class="quantity-input input-number" type="text" name="quant[1]" value="1" min="1" max="100">
-                                    <button type="button" class="btn  plus-minus" data-type="plus" data-field="quant[1]" style="flex:1;">
-                                        <i class="fas fa-plus" style="color:lightgrey"></i>
-                                        </button>
-                            </DIV>
-                            <a href="" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">Add to cart</a>
+                            <form method="post" action="." class="cart">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <br />
+                                    <input type="submit" value="Add To Cart" name="submit" alt="Add To Cart" />
+                            </form>
 
                         </DIV>
                         <DIV class="row no-gutters" style="margin-top:20px;">
