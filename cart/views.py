@@ -25,7 +25,6 @@ def add_item_cart(request):
 
         if request.session['cart_id'] is None:
             request.session['cart_id'] = cart_obj.id
-            print(request.session['cart_id'])
 
         # Add the item to cart if not exist.  If exist, get itemInCart object  
         itemInCart, new_item = CartItem.objects.get_or_create(
