@@ -1,9 +1,59 @@
+import decimal
+
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 
 from product.models import ProductVariant
 from cart.models import Cart,CartItem
+
+CART_ID_SESSION_KEY = 'cart_id'
+# get the current user's cart id, sets new one if blank
+def _cart_id(request):
+    if request.session.get(CART_ID_SESSION_KEY,'') == '':
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
+        request.session[CART_ID_SESSION_KEY] = cart_obj.id
+    return request.session[CART_ID_SESSION_KEY]
+
+# return all items from the current user's cart
+def get_cart_items(request):
+    return CartItem.objects.filter(cartid=_cart_id(request))    
+
+# returns the total number of items in the user's cart
+def cart_distinct_item_count(request):
+    return get_cart_items(request).count()    
+
+def get_single_item(request, item_id):
+    return get_object_or_404(CartItem, id=item_id, cartid=_cart_id(request)) 
+
+# update quantity for single item
+def update_cart(request):
+    postdata = request.POST.copy()
+    item_id = postdata['item_id']
+    quantity = postdata['quantity']
+    cart_item = get_single_item(request, item_id)
+    if cart_item:      
+        if int(quantity) > 0:
+            cart_item.quantity = int(quantity)
+            cart_item.save()
+        else:
+            remove_from_cart(request) 
+
+# remove a single item from cart
+def remove_from_cart_2(request):
+    postdata = request.POST.copy()
+    item_id = postdata['item_id']
+    cart_item = get_single_item(request, item_id)
+    if cart_item:
+        cart_item.delete()
+
+# gets the total cost for the current cart
+def cart_subtotal(request):
+    cart_total = decimal.Decimal('0.00')
+    cart_products = get_cart_items(request)
+    for cart_item in cart_products:
+        cart_total += cart_item.product.price * cart_item.quantity
+    return cart_total        
 
 
 def add_item_cart(request):
@@ -43,6 +93,8 @@ def add_item_cart(request):
             cart_obj.save()
 
         else:
+            itemInCart.quantity = int(postdata['quantity'])
+            itemInCart.save()
             cart_obj.items.add(itemInCart)
             request.session['cart_items'] += 1
             # cart_obj.total = cart_obj.get_total()
@@ -114,6 +166,15 @@ def remove_single_item_from_cart(request, productid):
 
 
 def cart_home(request):
+
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Remove':
+            cart.remove_from_cart(request)
+        if postdata['submit'] == 'Update':
+            cart.update_cart(request)
+
+    cart_items = get_cart_items(request)
 
     cart_id = request.session.get("cart_id", None) 
     if cart_id is not None:
