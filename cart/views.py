@@ -24,6 +24,7 @@ def cart_distinct_item_count(request):
     return get_cart_items(request).count()    
 
 def get_single_item(request, item_id):
+    print(item_id)
     return get_object_or_404(CartItem, id=item_id, cartid=_cart_id(request)) 
 
 # update quantity for single item
@@ -40,10 +41,12 @@ def update_cart(request):
             remove_from_cart(request) 
 
 # remove a single item from cart
-def remove_from_cart_2(request):
+def remove_from_cart(request):
     postdata = request.POST.copy()
     item_id = postdata['item_id']
+    print(item_id)
     cart_item = get_single_item(request, item_id)
+    print(cart_item)
     if cart_item:
         cart_item.delete()
 
@@ -116,7 +119,7 @@ def add_item_cart(request):
 
     return redirect("cart:home")
 
-def remove_from_cart(request,product_id):   
+def remove_from_cart_old(request,product_id):   
     cart_id = request.session.get("cart_id", None)                          # Get Cart_id from request
     order_qs = Cart.objects.filter(                                         # Get Cart_object
         id=cart_id,
@@ -170,11 +173,11 @@ def cart_home(request):
     if request.method == 'POST':
         postdata = request.POST.copy()
         if postdata['submit'] == 'Remove':
-            cart.remove_from_cart(request)
+            remove_from_cart(request)
         if postdata['submit'] == 'Update':
-            cart.update_cart(request)
+            update_cart(request)
 
-    cart_items = get_cart_items(request)
+    #cart_items = get_cart_items(request)
 
     cart_id = request.session.get("cart_id", None) 
     if cart_id is not None:

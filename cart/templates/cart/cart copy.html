@@ -13,7 +13,7 @@
       <th width="150px">Product Name</th>
       <th width="500px">Description</th>
       <th width="100px">Price</th>
-      <th colspan="2" width="100px" style="text-align:center;">Quantity</th>
+      <th width="100px">Quantity</th>
       <th style="text-align:center;" width="100px">Total</th>
       <th width="50px">Delete</th>
     </tr>
@@ -24,14 +24,16 @@
     <td><a href='{{ order_item.item.get_absolute_url }}'>{{ order_item.item.sku }}</a> </td>
     <td>{{ order_item.item.description|truncatewords:20 }}</td>
     <td>${{ order_item.item.price }}</td>
-    <td colspan="2" align="center">
-        <form method="post" action="." class="cart" style="width:200px;">
-            {% csrf_token %}
-            <input type="text" name="quantity" value="{{ order_item.quantity }}" id="quantity" 
-            size="2" class="quantity" maxlength="5" style="text-align:center;"/>
-            <input type="hidden" name="item_id" value="{{ order_item.id }}" />
-            <input type="submit" name="submit" value="Update" />
-            </form>
+    <td align="center">
+        <form id='myform' method='POST' action='#' class="numbo">
+            <div class="form-row">
+              <div class="form-row__content">
+                <a style="padding:0;width:30%;" href="{% url 'cart:remove-item-from-cart' order_item.item.id %}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">-</a>
+                <input style="text-align:center;width:30%;" class="form-input qty" type="text" name="quantity-test" value="{{ order_item.quantity }}" />
+                <a style="padding:0;width:30%;" href="{% url 'cart:add2cart' order_item.item.id %}" class="add2cart btn btn-primary" style="margin:0 10px auto;flex:6;">+</a>
+              </div>
+            </div>
+          </form>
           
           <!--
                 <input type='button' value='-' class='qtyminus' field='quantity' style="font-weight: bold;" />
@@ -42,36 +44,27 @@
     </td>
     <!-- <td align="center"><span>-</span>{{ order_item.quantity }}<span><i class="fas fa-plus"></i></span></td> -->
     <td align="center">${{ order_item.item_total_price }}</td>
-      <td align="center">
-          <form method="post" action="." class="cart">
-              {% csrf_token %}
-              <input type="hidden" name="item_id" value="{{ order_item.id }}" />
-              <input type="submit" name="submit" value="Remove"/>
-          </form>
-      </td>
+      <td align="center"><a href="{% url 'cart:remove-from-cart' product_id=order_item.item.id %}"><i class="fas fa-trash"></i></a></td>
     </tr>
     {% endfor %}
     <tr>
-      <td colspan="5"></td>
+      <td colspan="4"></td>
       <td align="right"><b>Subtotal</b></td>
       <td align="center" colspan="1">$<span class='cart-subtotal'>{{ cart.subtotal_price }}</span></td>
-      <td colspan="1"></td>
     </tr>
     <tr>
-      <td colspan="5"></td>
+      <td colspan="4"></td>
       <td align="right"><b>GST (7%)</b></td>
       <td align="center" colspan="1">$<span class='cart-total'>{{ cart.tax_amt|floatformat:"2" }}</span></td>
-      <td colspan="1"></td>
     </tr>    
     <tr>
-      <td colspan="5"></td>
+      <td colspan="4"></td>
       <td align="right"><b>Total</b></td>
       <td align="center" colspan="1">$<span class='cart-total'>{{ cart.total_price|floatformat:"2" }}</span></td>
-      <td colspan="1"></td>
     </tr>
     <tr>
-      <td colspan="6"></td>
-      <td colspan="6"><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Checkout</a></td>
+      <td colspan="5"></td>
+      <td colspan="5"><a class='btn btn-lg btn-success' href='{% url "cart:checkout" %}'>Checkout</a></td>
     </tr>
 
   </tbody>
