@@ -25,7 +25,7 @@ SECRET_KEY = 'vx$!w_=_gnpj9-sgkh&gdk3)i9osa1&lzw%k3b74c5$(omi%o+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.43.122']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
+    'rest_framework',
     'product',
     'cart',
     'utils',
