@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     'rest_framework',
+    'api',
     'product',
     'cart',
     'utils',

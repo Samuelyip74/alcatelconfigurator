@@ -9,7 +9,7 @@ from .views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api/', include('api.urls'), name='api'),
     url(r'^$', home, name='homepage'),
     url(r'^product/',include('product.urls')),
     url(r'^cart/',include('cart.urls')),
