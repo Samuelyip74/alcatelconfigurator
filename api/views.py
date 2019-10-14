@@ -7,5 +7,5 @@ class ProductVariantListView(generics.ListAPIView):
     """
     Provides a get method handler.
     """
-    queryset = ProductVariant.objects.all()
+    queryset = ProductVariant.objects.filter(is_active=True)
     serializer_class = ProductVariantSerializer
