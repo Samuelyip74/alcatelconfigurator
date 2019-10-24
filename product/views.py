@@ -18,7 +18,7 @@ def productlisting(request,category):
 
 
 # Create your views here.
-def productdetail(request,slug):
+def productdetail(request,pk):
     if request.method == 'POST':
         # add to cart…create the bound form
         postdata = request.POST.copy()
@@ -32,9 +32,9 @@ def productdetail(request,slug):
         return redirect("cart:home")
     else:
         form = ProductAddToCartForm(request=request, label_suffix=':')
-    form.fields['product_slug'].widget.attrs['value'] = slug
+    form.fields['product_pk'].widget.attrs['value'] = pk
     request.session.set_test_cookie()
-    product_obj = ProductVariant.objects.get(sku=slug)
+    product_obj = ProductVariant.objects.get(id=pk)
     print(product_obj)
     context = {
         'p_object' : product_obj,

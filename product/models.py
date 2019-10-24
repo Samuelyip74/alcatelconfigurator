@@ -2,7 +2,7 @@ import datetime
 import random
 import os
 import math
-
+from django.contrib.sites.models import Site
 from django.conf import settings
 from django.urls import reverse
 
@@ -79,11 +79,13 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         #return "/products/{slug}/".format(slug=self.slug)
-        return reverse("product:detail", kwargs={"slug": self.slug})
+        return reverse("product:detail", kwargs={"pk": self.id})
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
+        # url = self.get_absolute_url
+        # instance.url = url + instance.slug
 
 pre_save.connect(product_pre_save_receiver, sender=Product)         
 
@@ -99,6 +101,7 @@ class ProductVariant(models.Model):
     sku = models.CharField('SKU',max_length=200)
     product_family = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
     product_category = models.ManyToManyField(Category)
+    url = models.CharField(max_length=200, blank=True,default='')
     description = models.CharField('Detail Description',max_length=200,blank=True)
     created_date = models.DateTimeField('Date created',auto_now_add=True, blank=True)
     options = models.ManyToManyField(ProductOption)
@@ -111,9 +114,18 @@ class ProductVariant(models.Model):
 
     def get_absolute_url(self):
         #return "/products/{slug}/".format(slug=self.slug)
-        return reverse("product:detail", kwargs={"slug": self.sku})
-    
+        return reverse("product:detail", kwargs={"pk": self.id})
 
-  
+    def get_full_absolute_url(self):
+        domain = Site.objects.get_current().domain
+        path = self.get_absolute_url()
+        url = 'http://{domain}{path}'.format(domain=domain, path=path)
+        return url
+    
+def productvariant_pre_save_receiver(sender, instance, *args, **kwargs):
+    instance.url = instance.get_full_absolute_url()
+
+pre_save.connect(productvariant_pre_save_receiver, sender=ProductVariant)         
+
  
     

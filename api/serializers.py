@@ -28,6 +28,7 @@ class ProductVariantSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "sku", 
+            "url",
             "product_family",
             "description",
             "created_date",

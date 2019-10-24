@@ -10,5 +10,5 @@ app_name = 'product'
 
 urlpatterns = [
     url(r'^category/(?P<category>[\w-]+)/$', productlisting, name='product_listing'),
-    url(r'^variant/(?P<slug>[\w-]+)/$', productdetail, name='detail'),
+    url(r'^variant/(?P<pk>[\w-]+)/$', productdetail, name='detail'),
 ]

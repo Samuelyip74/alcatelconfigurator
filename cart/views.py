@@ -61,13 +61,13 @@ def cart_subtotal(request):
 
 def add_item_cart(request):
     postdata = request.POST.copy()
-    product_slug = postdata.get('product_slug','')
+    product_pk = postdata.get('product_pk','')
     quantity = postdata.get('quantity',1)
 
-    if product_slug is not None:
+    if product_pk is not None:
         try:
             # Check if Product is still available in Database.  
-            product_obj = ProductVariant.objects.get(sku=product_slug)
+            product_obj = ProductVariant.objects.get(id=product_pk)
         except ProductVariant.DoesNotExist:
             print("Show message to user, product is gone?")
             return redirect("cart:home")
